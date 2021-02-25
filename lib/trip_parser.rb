@@ -1,9 +1,4 @@
 # frozen_string_literal: true
 
 require_relative "trip_parser/version"
-
-module TripParser
-  class Error < StandardError; end
-  # Your code goes here...
-  puts "hello"
-end
+require_relative "../lib/trip_parser/cli"
