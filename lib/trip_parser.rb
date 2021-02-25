@@ -5,4 +5,5 @@ require_relative "trip_parser/version"
 module TripParser
   class Error < StandardError; end
   # Your code goes here...
+  puts "hello"
 end
