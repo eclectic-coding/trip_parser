@@ -8,8 +8,8 @@ module TripParser
   # Main CLI interface
   #
   class CLI
-
     def call
+      # Add CLI arguments
 
       # Output Report
       find_drivers.each do |driver|

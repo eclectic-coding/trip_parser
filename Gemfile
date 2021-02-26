@@ -12,4 +12,5 @@ group :development, :test do
   gem "minitest-reporters"
   gem "pry"
   gem "rubocop", "~> 0.80"
+  gem "rubocop-minitest", require: false
 end
