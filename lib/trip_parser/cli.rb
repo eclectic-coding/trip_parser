@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'pry'
+require "time"
+require "pry"
 
 module TripParser
   ##
@@ -9,9 +10,15 @@ module TripParser
   class CLI
 
     def call
-      puts "Hello y'all"
-      # find_drivers
-      find_total_distance("Kumi")
+
+      # Output Report
+      find_drivers.each do |driver|
+        if total_distance(driver).positive?
+          puts "#{driver}: #{total_distance(driver)} miles @ #{average_speed(driver)}mph"
+        else
+          puts "#{driver}: 0 miles"
+        end
+      end
     end
 
     def find_drivers
@@ -23,18 +30,25 @@ module TripParser
       drivers.uniq
     end
 
-    def find_total_distance(driver)
+    def total_distance(driver)
       miles = 0.0
+
       File.foreach("input.txt") do |trip|
         miles += trip.split(" ")[4].to_f if trip.scan("Trip #{driver.strip}").first
       end
 
-      puts miles.positive? ? miles : 0
+      miles.positive? ? miles : 0
     end
 
-    def find_average_trips_speed; end
-
-    def output_report; end
+    def average_speed(driver)
+      logged_time = 0.0
+      File.foreach("input.txt") do |trip|
+        if trip.scan("Trip #{driver.strip}").first
+          logged_time += (Time.parse(trip.split(" ")[3]) - Time.parse(trip.split(" ")[2])) / 3600
+        end
+      end
+      (total_distance(driver) / logged_time).round
+    end
 
     ##
     # Main TripParser Error
